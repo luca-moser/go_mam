@@ -1,0 +1,22 @@
+language: go
+
+go:
+  - 1.12.7
+
+before_install:
+  - export GO111MODULE='on'
+  - export CGO_CFLAGS="-g -O2 -std=gnu99"
+  - sudo apt-get install -y xsltproc
+  - wget https://github.com/bazelbuild/bazel/releases/download/0.28.0/bazel_0.28.0-linux-x86_64.deb
+  - sudo dpkg -i bazel_0.28.0-linux-x86_64.deb
+  - git submodule update --init --recursive
+  - cd entangled && bazel build --copt='-std=c99' -c opt //mam:libmam.so
+  - sudo cp bazel-bin/mam/libmam.so /usr/lib
+  - cd ../XKCP
+  - make generic64/libkeccak.so
+  - sudo cp bin/generic64/libkeccak.so /usr/lib
+  - cd ../
+  - go get ./...
+
+script:
+  - travis_wait 30 go test -v
