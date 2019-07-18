@@ -18,7 +18,7 @@ before_install:
   - sudo cp bin/generic64/libkeccak.so /usr/lib
   - sudo cp bin/generic64/libkeccak.so ./../
   - cd ./../
-  - tar headers.tar keccak mam uthash
+  - tar -czf headers.tar keccak mam uthash
   - go get ./...
 
 script:
