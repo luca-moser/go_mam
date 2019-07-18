@@ -12,11 +12,25 @@ before_install:
   - git submodule update --init --recursive
   - cd entangled && bazel build --copt='-std=c99' -c opt //mam:libmam.so
   - sudo cp bazel-bin/mam/libmam.so /usr/lib
-  - cd ../XKCP
+  - sudo cp bazel-bin/mam/libmam.so ./../
+  - cd ./../XKCP
   - make generic64/libkeccak.so
   - sudo cp bin/generic64/libkeccak.so /usr/lib
-  - cd ../
+  - sudo cp bin/generic64/libkeccak.so ./../
+  - cd ./../
+  - tar headers.tar keccak mam uthash
   - go get ./...
 
 script:
   - travis_wait 30 go test -v
+
+deploy:
+  - provider: releases
+    api_key: $GITHUB_OAUTH_TOKEN
+    file:
+      - libmam.so
+      - libkeccak.so
+      - headers.tar
+    skip_cleanup: true
+    on:
+      tags: true
