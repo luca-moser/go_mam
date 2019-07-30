@@ -89,6 +89,9 @@ func (stream *MAMReadStream) Open(channelID trinary.Trytes, preSharedKeys []mam.
 					default:
 					}
 				}
+				if len(payload) == 0{
+					continue
+				}
 
 				for x := range bndl {
 					seen[bndl[x].Hash] = struct{}{}
