@@ -18,6 +18,8 @@ before_install:
   - sudo cp bin/generic64/libkeccak.so /usr/lib
   - sudo cp bin/generic64/libkeccak.so ./../
   - cd ./../
+  - mv libmam.so libmam_linux_x64.so
+  - mv libkeccak.so libkeccak_linux_x64.so
   - tar -czf headers.tar keccak mam uthash
   - go get ./...
 
@@ -28,8 +30,8 @@ deploy:
   - provider: releases
     api_key: $GITHUB_OAUTH_TOKEN
     file:
-      - libmam.so
-      - libkeccak.so
+      - libmam_linux_x64.so
+      - libkeccak_linux_x64.so
       - headers.tar
     skip_cleanup: true
     on:

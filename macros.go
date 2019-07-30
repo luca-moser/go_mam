@@ -1,7 +1,7 @@
 package mam
 
 /*
-#cgo CFLAGS: -Imam -Ientangled -Iuthash/src
+#cgo CFLAGS: -Imam -Iuthash/src -Ientangled
 #cgo LDFLAGS: -L. -lmam -lkeccak
 #include <mam/api/api.h>
 
